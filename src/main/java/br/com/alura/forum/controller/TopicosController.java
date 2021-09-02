@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,9 +46,10 @@ public class TopicosController {
 	public Page<TopicoDto> lista(
 			@RequestParam(required = false) String nomeCurso,
 			@RequestParam int pagina,
-			@RequestParam int qnt) {
+			@RequestParam int qnt,
+			@RequestParam String ordenacao) {
 		
-		Pageable paginacao = PageRequest.of(pagina, qnt);
+		Pageable paginacao = PageRequest.of(pagina, qnt, Direction.DESC, ordenacao);
 
 		if (nomeCurso == null) {
 			Page<Topico> topicos = topicoRepository.findAll(paginacao);
